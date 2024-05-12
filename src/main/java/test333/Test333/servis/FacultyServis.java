@@ -17,7 +17,7 @@ public class FacultyServis {
         return facultyRepository.save(faculty);
     }
     public Faculty get(Long id){
-        return facultyRepository.findById(id).get();
+        return facultyRepository.findById(id).orElse(null);
     }
     public void delete(Long id){
         facultyRepository.deleteById(id);
@@ -26,10 +26,15 @@ public class FacultyServis {
         return facultyRepository.save(faculty);
 
     }
-    public Collection<Faculty> getAll(Faculty faculty){
+    public Collection<Faculty> getAll(){
         return facultyRepository.findAll();
     }
     public Collection<Faculty> findColor(String color) {
-        return facultyRepository.findByColor(color);
+        return facultyRepository.findByColorIgnoreCase(color);
+
     }
+    public Collection<Faculty> findByNameIgnoreCase(String name){
+    return facultyRepository.findByNameIgnoreCase(name);
+    }
+    /**/
 }
