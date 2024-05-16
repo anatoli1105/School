@@ -1,6 +1,7 @@
 package test333.Test333.controller;
 
 import org.springframework.web.bind.annotation.*;
+import test333.Test333.model.Faculty;
 import test333.Test333.model.Student;
 import test333.Test333.servis.StudentServis;
 
@@ -35,14 +36,22 @@ public class StudentController {
     }
 
     @GetMapping
-    public Collection<Student> getAllStudent(@RequestParam Student student){
-        return studentServis.getAll(student);
+    public Collection<Student> getAllStudent(@RequestParam (required = false)Integer age,
+                                             @RequestParam (required = false)Integer min,@RequestParam (required = false)Integer max){
+        if(age!=null){
+            return studentServis.byAge(age);
+        }
+        if(min!=null||max!=null){
+            return studentServis.findByAgeBetween(min,max);
+        }
+
+        return studentServis.getAll();
+    }
+    @GetMapping(path = "facultyStudent")
+    public Faculty facultyStudent(@RequestParam Long id){
+        return studentServis.get(id).getFaculty();
     }
 
-    @GetMapping(path = "/age")
-    public Collection<Student> ageFilter(@RequestParam int age) {
-        return studentServis.byAge(age);
 
-     }
 
 }
