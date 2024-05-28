@@ -8,7 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @OpenAPIDefinition
 public class Test333Application {
 
-
 	public static void main(String[] args) {
 		SpringApplication.run(Test333Application.class, args);
 	}

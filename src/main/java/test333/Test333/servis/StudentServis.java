@@ -21,8 +21,13 @@ public class StudentServis {
     public Student get(Long id){
         return studentRepository.findById(id).orElse(null);
     }
-    public void delete(Long id){
-        studentRepository.deleteById(id);
+    public boolean delete(Long id){
+        return studentRepository.findById(id).
+                map(entity->{studentRepository.delete(entity);
+                    return true;}).orElse(false);
+
+
+
     }
     public Student update(Student student) {
         return studentRepository.save(student);

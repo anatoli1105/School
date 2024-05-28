@@ -36,5 +36,5 @@ public class FacultyServis {
     public Collection<Faculty> findByNameIgnoreCase(String name){
     return facultyRepository.findByNameIgnoreCase(name);
     }
-    /**/
+
 }

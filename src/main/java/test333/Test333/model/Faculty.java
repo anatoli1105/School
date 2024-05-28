@@ -2,6 +2,7 @@ package test333.Test333.model;
 
 import jakarta.persistence.*;
 
+//import javax.persistence.Entity;
 import java.util.Collection;
 import java.util.Objects;
 

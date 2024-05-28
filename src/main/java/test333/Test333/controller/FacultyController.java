@@ -45,6 +45,7 @@ public class FacultyController {
         if(name!=null&&!name.isBlank()){
             return facultyServis.findByNameIgnoreCase(name);
         }
+
         return facultyServis.getAll();
     }
     @GetMapping(path = "liststudent")

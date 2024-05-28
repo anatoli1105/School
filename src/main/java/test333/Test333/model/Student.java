@@ -3,11 +3,10 @@ package test333.Test333.model;
 
 //import jakarta.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
-import java.util.Collection;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 public class Student {
@@ -22,8 +21,9 @@ public class Student {
 
     @ManyToOne
     @JoinColumn(name = "faculty_id")
+    @JsonIgnore
     private Faculty faculty;
-    public Student(Long id, int age, String name,Faculty faculty) {
+    public Student(Long id, int age, String name, Faculty faculty) {
         this.age = age;
         this.id=id;
         this.name=name;

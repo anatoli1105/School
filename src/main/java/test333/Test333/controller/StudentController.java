@@ -23,12 +23,12 @@ public class StudentController {
         return studentServis.add(student);
     }
     @GetMapping(path = "/get")
-    public Student get(@PathVariable Long id){
+    public Student get(@RequestParam Long id){
         return studentServis.get(id);
     }
     @DeleteMapping(path = "/delete")
-    public void delete(@PathVariable Long id){
-        studentServis.delete(id);
+    public boolean delete(@RequestParam Long id){
+        return studentServis.delete(id);
     }
     @PutMapping(path = "/udate")
     public Student update(@RequestBody Student student){
