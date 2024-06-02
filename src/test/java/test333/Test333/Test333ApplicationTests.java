@@ -18,7 +18,9 @@ import test333.Test333.controller.StudentController;
 import test333.Test333.model.Faculty;
 import test333.Test333.model.Student;
 
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class Test333ApplicationTests {
@@ -46,7 +48,6 @@ public class Test333ApplicationTests {
         Assertions
                 .assertThat(this.restTemplate.postForObject("http://localhost:" + port + "/student/add", student, Student.class))
                 .isEqualTo(new Student(student.getId(), 34, "ivan", null));
-
 
 
     }
@@ -93,8 +94,9 @@ public class Test333ApplicationTests {
 
 
     }
+
     @Test
-    void getAllStudentTest()throws Exception{
+    void getAllStudentAndAgeStudentsTest() throws Exception {
         Student student = new Student();
         student.setName("ivan");
         student.setAge(35);
@@ -105,14 +107,39 @@ public class Test333ApplicationTests {
                 .assertThat(this.restTemplate.postForObject("http://localhost:" + port + "/student/add", student, Student.class));
 
         Assertions
-                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student" , List.class))
+                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student", List.class))
                 .isNotNull();
+
+
+        var listStudents = (this.restTemplate.getForObject("http://localhost:" + port + "/student?age=35", Student[].class));
+
+        for (int i = 0; i < listStudents.length; i++) {
+            Assertions
+                    .assertThat(listStudents[i].getAge())
+                    .isEqualTo(35);
+        }
+
+
+    }
+
+    @Test
+    void testAgeStudents() throws Exception {
+
+        Student student = new Student();
+        student.setName("ivanov");
+        student.setAge(39);
+        student.setId(5L);
+
+
         Assertions
-                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student?age=35" , List.class))
-                .isEqualTo(student);
+                .assertThat(this.restTemplate.postForObject("http://localhost:" + port + "/student/add", student, Student.class));
+        var age = (this.restTemplate.getForObject("http://localhost:" + port + "/student?min=39&max=40 ", Student[].class));
+        for (int i = 0; i < age.length; i++) {
+            Assertions
+                    .assertThat(age[i].getAge())
+                    .isEqualTo(39);
 
-
-
+        }
     }
 
 
