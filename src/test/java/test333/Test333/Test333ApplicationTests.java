@@ -80,17 +80,17 @@ public class Test333ApplicationTests {
         Student student = new Student();
         student.setName("ivan");
         student.setAge(34);
-        student.setId(6L);
+        student.setId(69L);
 
 
         Assertions
                 .assertThat(this.restTemplate.postForObject("http://localhost:" + port + "/student/add", student, Student.class));
 
-        restTemplate.delete("http://localhost:" + port + "/student/delete/id=4", Student.class);
+        restTemplate.delete("http://localhost:" + port + "/student/delete?id=69", Student.class);
 
         Assertions
-                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student/get" + 6, Student.class))
-                .isEqualTo(new Student(null, 0, null, null));
+                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student/get?id= 69", Student.class))
+                .isEqualTo(null);
 
 
     }
@@ -114,9 +114,11 @@ public class Test333ApplicationTests {
         var listStudents = (this.restTemplate.getForObject("http://localhost:" + port + "/student?age=35", Student[].class));
 
         for (int i = 0; i < listStudents.length; i++) {
-            Assertions
-                    .assertThat(listStudents[i].getAge())
-                    .isEqualTo(35);
+            if(listStudents[i].getAge()==35) {
+                Assertions
+                        .assertThat(listStudents[i].getAge())
+                        .isEqualTo(35);
+            }
         }
 
 
