@@ -5,7 +5,7 @@ import test333.Test333.model.Faculty;
 
 import java.util.Collection;
 
-public interface FacultyRepository extends JpaRepository<Faculty,Long> {
+public interface FacultyRepository extends JpaRepository<Faculty, Long> {
     Collection<Faculty> findByColorIgnoreCase(String color);
 
     Collection<Faculty> findByNameIgnoreCase(String name);

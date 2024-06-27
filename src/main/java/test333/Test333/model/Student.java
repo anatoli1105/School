@@ -14,23 +14,23 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-   private int age;
-
-
+    private int age;
 
 
     @ManyToOne
     @JoinColumn(name = "faculty_id")
     @JsonIgnore
     private Faculty faculty;
+
     public Student(Long id, int age, String name, Faculty faculty) {
         this.age = age;
-        this.id=id;
-        this.name=name;
-        this.faculty=faculty;
+        this.id = id;
+        this.name = name;
+        this.faculty = faculty;
 
     }
-    public Student(){
+
+    public Student() {
 
     }
 

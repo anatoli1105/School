@@ -19,9 +19,9 @@ public class FacultyServis {
     public Faculty get(Long id){
         return facultyRepository.findById(id).orElse(null);
     }
-    public void delete(Long id){
-        facultyRepository.deleteById(id);
-    }
+    public boolean delete(Long id){return facultyRepository.findById(id).
+    map(entity->{facultyRepository.delete(entity);
+        return true;}).orElse(false);}
     public Faculty update(Faculty faculty) {
         return facultyRepository.save(faculty);
 

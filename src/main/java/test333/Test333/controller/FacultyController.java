@@ -22,13 +22,13 @@ public class FacultyController {
     }
 
     @GetMapping(path = "/get")
-    public Faculty get(@PathVariable Long id) {
+    public Faculty get(@RequestParam Long id) {
         return facultyServis.get(id);
     }
 
     @DeleteMapping(path = "/delete")
-    public void delete(@PathVariable Long id) {
-        facultyServis.delete(id);
+    public boolean delete(@RequestParam Long id) {
+        return facultyServis.delete(id);
     }
 
     @PutMapping(path = "/udate")

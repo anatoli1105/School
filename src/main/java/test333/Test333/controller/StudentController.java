@@ -51,6 +51,18 @@ public class StudentController {
     public Faculty facultyStudent(@RequestParam Long id){
         return studentServis.get(id).getFaculty();
     }
+    @GetMapping(path = "countStudent")
+    public int countStudent(){
+        return studentServis.studentInSchool();
+    }
+    @GetMapping(path = "studentAge")
+    public double getStudentAge(){
+        return studentServis.getStudentsAge();
+    }
+    @GetMapping(path = "studentLimit")
+    public Collection<Student> getStudentLimit(){
+        return studentServis.getStudentsLimit();
+    }
 
 
 
