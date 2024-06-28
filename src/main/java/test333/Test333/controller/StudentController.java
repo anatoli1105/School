@@ -23,12 +23,12 @@ public class StudentController {
         return studentServis.add(student);
     }
     @GetMapping(path = "/get")
-    public Student get(@PathVariable Long id){
+    public Student get(@RequestParam Long id){
         return studentServis.get(id);
     }
     @DeleteMapping(path = "/delete")
-    public void delete(@PathVariable Long id){
-        studentServis.delete(id);
+    public boolean delete(@RequestParam Long id){
+        return studentServis.delete(id);
     }
     @PutMapping(path = "/udate")
     public Student update(@RequestBody Student student){
@@ -50,6 +50,18 @@ public class StudentController {
     @GetMapping(path = "facultyStudent")
     public Faculty facultyStudent(@RequestParam Long id){
         return studentServis.get(id).getFaculty();
+    }
+    @GetMapping(path = "countStudent")
+    public int countStudent(){
+        return studentServis.studentInSchool();
+    }
+    @GetMapping(path = "studentAge")
+    public double getStudentAge(){
+        return studentServis.getStudentsAge();
+    }
+    @GetMapping(path = "studentLimit")
+    public Collection<Student> getStudentLimit(){
+        return studentServis.getStudentsLimit();
     }
 
 

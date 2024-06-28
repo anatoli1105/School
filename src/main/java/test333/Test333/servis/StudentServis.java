@@ -21,8 +21,13 @@ public class StudentServis {
     public Student get(Long id){
         return studentRepository.findById(id).orElse(null);
     }
-    public void delete(Long id){
-        studentRepository.deleteById(id);
+    public boolean delete(Long id){
+        return studentRepository.findById(id).
+                map(entity->{studentRepository.delete(entity);
+                    return true;}).orElse(false);
+
+
+
     }
     public Student update(Student student) {
         return studentRepository.save(student);
@@ -36,6 +41,15 @@ public class StudentServis {
      }
      public Collection<Student> findByAgeBetween(int min,int max){
         return studentRepository.findByAgeBetween(min,max);
+     }
+     public int studentInSchool(){
+        return studentRepository.countStudent();
+     }
+     public double getStudentsAge(){
+        return studentRepository.avgAge();
+     }
+     public Collection<Student> getStudentsLimit(){
+        return studentRepository.getLastFive();
      }
 
 

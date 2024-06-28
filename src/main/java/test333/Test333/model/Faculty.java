@@ -2,6 +2,7 @@ package test333.Test333.model;
 
 import jakarta.persistence.*;
 
+//import javax.persistence.Entity;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -19,14 +20,15 @@ public class Faculty {
     @OneToMany(mappedBy = "faculty")
     private Collection<Student> student;
 
-    public Faculty(Long id, String name, String color,Collection<Student>student) {
+    public Faculty(Long id, String name, String color, Collection<Student> student) {
         this.id = id;
         this.color = color;
         this.name = name;
         this.student = student;
     }
-    public Faculty(){}
 
+    public Faculty() {
+    }
 
 
     public String getColor() {
