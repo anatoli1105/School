@@ -54,10 +54,7 @@
 			<version>42.2.10</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.liquibase</groupId>
-			<artifactId>liquibase-core</artifactId>
-		</dependency>
+
 
 
 

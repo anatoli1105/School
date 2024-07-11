@@ -1,6 +1,8 @@
 package test333.Test333.servis;
 
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -28,18 +30,15 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Service
 @Transactional
 public class AvatarServis {
-   @Value("${path.to.avatars.folder}")
- private  String avatarsDir;
+    @Value("${path.to.avatars.folder}")
+    private String avatarsDir;
 
 
-
-
-
-
+    private final static Logger logger = LoggerFactory.getLogger(AvatarServis.class);
 
     private final AvatarRepository avatarRepository;
-    //private final Path avatarsDir;
-    private  final StudentRepository studentRepository;
+
+    private final StudentRepository studentRepository;
 
     public AvatarServis(AvatarRepository avatarRepository, StudentRepository studentRepository) {
 
@@ -48,10 +47,8 @@ public class AvatarServis {
     }
 
 
-
-
-
-    public void  save(Long studentId, MultipartFile avatarFile) throws IOException {
+    public void save(Long studentId, MultipartFile avatarFile) throws IOException {
+        logger.info("the image saving method was called");
         Student student = studentRepository.getById(studentId);
 
         Path filePath = Path.of(avatarsDir, student + "." + getExtensions(avatarFile.getOriginalFilename()));
@@ -65,7 +62,7 @@ public class AvatarServis {
         ) {
             bis.transferTo(bos);
         }
-        Avatar avatar =avatarRepository.findByStudentId(studentId).orElse(new Avatar());
+        Avatar avatar = avatarRepository.findByStudentId(studentId).orElse(new Avatar());
         avatar.setStudent(student);
         avatar.setFilePath(filePath.toString());
         avatar.setFileSize(avatarFile.getSize());
@@ -73,37 +70,14 @@ public class AvatarServis {
         avatar.setData(avatarFile.getBytes());
         avatarRepository.save(avatar);
     }
+
     private String getExtensions(String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
-    public Collection<Avatar> getPage(int page, int size ){
-        return avatarRepository.findAll(PageRequest.of(page,size)).toList();
+
+    public Collection<Avatar> getPage(int page, int size) {
+        return avatarRepository.findAll(PageRequest.of(page, size)).toList();
     }
-    /*public Optional  <Avatar> findAvatar(Long studentId){
-        Avatar avatar= avatarRepository.findByStudentId(studentId).orElse(new Avatar());
-        return avatar;*/
-  //  }
 
-        /*Files.createDirectories(Path.of("/avatars"));
-        var index= multipartFile.getName().lastIndexOf('.');
-        var extension=multipartFile.getName().substring(index);
-
-        Path filePath=avatarsDir.resolveConstantDesc(id + "." + extension);
-        try (var in=multipartFile.getInputStream()) {
-
-
-            Files.copy(in,filePath, StandardCopyOption.REPLACE_EXISTING);
-        }
-        Avatar avatar=avatarRepository.findAllByStudentId(id).orElse(new Avatar());
-        avatar.setFileSize(multipartFile.getSize());
-        avatar.setMediaType(multipartFile.getContentType());
-        avatar.setData(multipartFile.getBytes());
-        avatar.setStudent(studentRepository.getReferenceById(id));
-        avatar.setFilePath(filePath.toString());
-        return avatarRepository.save(avatar);
-    }*/
-   /* public Avatar getByDb(Long id){
-        return avatarRepository.findById(id).orElse(null);
-    }*/
 
 }
