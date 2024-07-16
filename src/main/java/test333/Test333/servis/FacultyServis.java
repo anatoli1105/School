@@ -8,6 +8,7 @@ import test333.Test333.model.Student;
 import test333.Test333.repository.FacultyRepository;
 
 import java.util.Collection;
+import java.util.Comparator;
 
 @Service
 public class FacultyServis {
@@ -59,6 +60,14 @@ public class FacultyServis {
     public Collection<Faculty> findByNameIgnoreCase(String name) {
         logger.info("method of searching faculties by name");
         return facultyRepository.findByNameIgnoreCase(name);
+    }
+
+    public String longNameFaculty() {
+        return facultyRepository.findAll()
+                .stream()
+                .map(o -> o.getName())
+                .max(Comparator.comparingInt(String::length))
+                .toString();
     }
 
 }

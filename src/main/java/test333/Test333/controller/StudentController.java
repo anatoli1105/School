@@ -72,5 +72,15 @@ public class StudentController {
         return studentServis.getStudentsLimit();
     }
 
+    @GetMapping(path = "/sortedStudent")
+    public Collection<String> getSortedStudent() {
+        return studentServis.getAllStudentNameSelection();
+    }
+
+    @GetMapping(path = "/midAgeStudents")
+    public double getMidAgeStudents() {
+        return studentServis.getMidAgeStudents();
+    }
+
 
 }

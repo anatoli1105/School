@@ -7,6 +7,7 @@ import test333.Test333.model.Student;
 import test333.Test333.repository.StudentRepository;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class StudentServis {
@@ -75,6 +76,25 @@ public class StudentServis {
     public Collection<Student> getStudentsLimit() {
         logger.info("list of students with limited number of students");
         return studentRepository.getLastFive();
+    }
+
+    public Collection<String> getAllStudentNameSelection() {
+        logger.info("method of selecting students by name");
+        return studentRepository.findAll()
+                .stream()
+                .map(o -> o.getName())
+                .map(o -> o.toUpperCase())
+                .filter(n -> n.startsWith("A"))
+                .sorted((n1, n2) -> n1.compareTo(n2))
+                .toList();
+    }
+
+    public double getMidAgeStudents() {
+        return studentRepository.findAll()
+                .stream()
+                .map(o -> o.getAge())
+                .mapToInt(o -> o)
+                .average().orElseGet(() -> 0.0);
     }
 
 
