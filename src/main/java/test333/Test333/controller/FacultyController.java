@@ -37,22 +37,22 @@ public class FacultyController {
     }
 
     @GetMapping
-    public Collection<Faculty> getAllStudent(@RequestParam(required = false)String color,
-                                             @RequestParam(required = false)String name) {
-        if(color != null &&!color.isBlank()){
+    public Collection<Faculty> getAllStudent(@RequestParam(required = false) String color,
+                                             @RequestParam(required = false) String name) {
+        if (color != null && !color.isBlank()) {
             return facultyServis.findColor(color);
         }
-        if(name!=null&&!name.isBlank()){
+        if (name != null && !name.isBlank()) {
             return facultyServis.findByNameIgnoreCase(name);
         }
 
         return facultyServis.getAll();
     }
+
     @GetMapping(path = "liststudent")
-    public Collection<Student> studentFaculty(@RequestParam Long id){
+    public Collection<Student> studentFaculty(@RequestParam Long id) {
         return facultyServis.get(id).getStudent();
     }
-
 
 
 }
