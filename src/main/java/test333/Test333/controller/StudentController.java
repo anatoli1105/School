@@ -19,6 +19,7 @@ public class StudentController {
 
     }
 
+
     @PostMapping(path = "/add")
     public Student add(@RequestBody Student student) {
         return studentServis.add(student);
@@ -81,6 +82,18 @@ public class StudentController {
     public double getMidAgeStudents() {
         return studentServis.getMidAgeStudents();
     }
+
+    @GetMapping(path = "/print-parallel")
+    public void printParallel() {
+        studentServis.printParallelStudent();
+    }
+    @GetMapping(path = "/print-synchronized")
+    public void printSynchronized(){
+        studentServis.printSynchronizedStudent();
+
+    }
+
+
 
 
 }

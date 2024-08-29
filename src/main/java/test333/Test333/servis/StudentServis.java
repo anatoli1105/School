@@ -3,11 +3,14 @@ package test333.Test333.servis;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import test333.Test333.Main;
 import test333.Test333.model.Student;
 import test333.Test333.repository.StudentRepository;
 
 import java.util.Collection;
 import java.util.List;
+
+import static test333.Test333.Test333Application.main;
 
 @Service
 public class StudentServis {
@@ -97,7 +100,61 @@ public class StudentServis {
                 .average().orElseGet(() -> 0.0);
     }
 
+    public void printParallelStudent() {
+        var students = studentRepository.findAll();
+
+        Main main = new Main();
+        new Thread(() -> {
+            System.out.println(students.get(0).getName());
+            System.out.println(students.get(1).getName());
+        })
+                .start();
+        new Thread(() -> {
+
+            System.out.println(students.get(2).getName());
+            System.out.println(students.get(3).getName());
+        })
+                .start();
+        new Thread(() -> {
+            System.out.println(students.get(4).getName());
+            System.out.println(students.get(5).getName());
+        })
+                .start();
+
+
+    }
+
+    public void printSynchronizedStudent() {
+        var students = studentRepository.findAll();
+
+
+        new Thread(() -> {
+
+            studentPrint(students.get(0));
+            studentPrint(students.get(1));
+        })
+                .start();
+        new Thread(() -> {
+
+            studentPrint(students.get(2));
+            studentPrint(students.get(3));
+        })
+                .start();
+        new Thread(() -> {
+            studentPrint(students.get(4));
+            studentPrint(students.get(5));
+        })
+                .start();
+    }
+
+    public static synchronized void studentPrint(Student student) {
+        System.out.println(student.getName());
+    }
+
 
 }
+
+
+
 
 
